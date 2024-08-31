@@ -1,0 +1,36 @@
+name: lint-test-deploy
+on: push
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4.1.7
+            - name: install nodejs
+              uses: actions/setup-node@v4
+            - name: install dependencies
+              run: npm ci
+            - name: lint
+              run: npm run lint
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4.1.7
+            - name: install nodejs
+              uses: actions/setup-node@v4
+            - name: install dependencies
+              run: npm ci
+            - name: test
+              run: npm run test
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4.1.7
+            - name: install nodejs
+              uses: actions/setup-node@v4
+            - name: install dependencies
+              run: npm ci
+            - name: deploy
+              run: npm run deploy
