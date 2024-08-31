@@ -1,5 +1,9 @@
 name: output meta
 on: 
+    pull_request:
+        types:
+            - opened
+    workflow_dispatch:
 jobs:
     info:
         runs-on: ubuntu-latest
