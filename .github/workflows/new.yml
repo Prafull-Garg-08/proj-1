@@ -1,5 +1,8 @@
 name: lint-test-deploy
-on: push
+on: 
+  push:
+    branches:
+      - main
 jobs:
     lint:
         runs-on: ubuntu-latest
@@ -13,6 +16,7 @@ jobs:
             - name: lint
               run: npm run lint
     test:
+        needs: lint
         runs-on: ubuntu-latest
         steps:
             - name: checkout
@@ -23,7 +27,27 @@ jobs:
               run: npm ci
             - name: test
               run: npm run test
+    build:
+        needs: test
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4.1.7
+            - name: install nodejs
+              uses: actions/setup-node@v4
+            - name: install dependencies
+              run: npm ci
+            - name: Build
+              run: npm run build
+            - name: upload artifact
+              uses: actions/upload-artifact@v4.4.0
+              with:
+                name: dist-files
+                path: |
+                    dist
+                    packge.json 
     deploy:
+        needs: build
         runs-on: ubuntu-latest
         steps:
             - name: checkout
@@ -34,3 +58,5 @@ jobs:
               run: npm ci
             - name: deploy
               run: npm run build
+
+      
