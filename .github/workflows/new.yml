@@ -79,7 +79,7 @@ jobs:
         - name: run this if fails
           run : |
                 echo "bla bla bla"
-                echo "la la la"
+                echo "${{env}}"
 
 
       
