@@ -31,7 +31,16 @@ jobs:
             - name: install dependencies
               run: npm ci
             - name: test
+              id : run-test
               run: npm run test
+            - name: upload artifact
+              if: steps.run-test.outcome == 'failure'
+              uses: actions/upload-artifact@v4.4.0
+              with:
+                name: test-report
+                path: |
+                  dist
+                  test.json
     build:
         needs: test
         runs-on: ubuntu-latest
