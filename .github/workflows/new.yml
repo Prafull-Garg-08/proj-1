@@ -5,21 +5,22 @@ on:
       - main
 jobs:
     lint:
-        runs-on: ubuntu-latest
-        steps:
-            - name: checkout
-              uses: actions/checkout@v4.1.7
-            - name: cache dependencies
-              uses: actions/cache@v4
-              with:
-                  path: ~/.npm
-                  key: deps-node-modules-${{hashFiles('**/package-lock.json')}}
-            - name: install nodejs
-              uses: actions/setup-node@v4
-            - name: install dependencies
-              run: npm ci
-            - name: lint
-              run: npm run lint
+      uses: ./.github/workflows/reuse.yml
+      # runs-on: ubuntu-latest
+      # steps:
+      #       - name: checkout
+      #         uses: actions/checkout@v4.1.7
+      #       - name: cache dependencies
+      #         uses: actions/cache@v4
+      #         with:
+      #             path: ~/.npm
+      #             key: deps-node-modules-${{hashFiles('**/package-lock.json')}}
+      #       - name: install nodejs
+      #         uses: actions/setup-node@v4
+      #       - name: install dependencies
+      #         run: npm ci
+      #       - name: lint
+      #         run: npm run lint
     test:
         needs: lint
         runs-on: ubuntu-latest
