@@ -21,7 +21,7 @@ jobs:
             - name: lint
               run: npm run lint
     test:
-        needs: lint
+        # needs: lint
         runs-on: ubuntu-latest
         steps:
             - name: checkout
@@ -42,7 +42,7 @@ jobs:
                   dist
                   test.json
     build:
-        needs: test
+        # needs: test
         runs-on: ubuntu-latest
         steps:
             - name: checkout
@@ -61,7 +61,7 @@ jobs:
                     dist
                     packge.json     
     deploy:
-        needs: build    
+        # needs: build    
         runs-on: ubuntu-latest
         steps:
             - name: download
@@ -70,6 +70,15 @@ jobs:
                   name: dist-files
             - name: output contents
               run: ls
+
+    report: 
+      if: failure()
+      runs-on: ubuntu-latest
+      steps:
+        - name: run this if fails
+          run : |
+                echo "bla bla bla"
+                echo "la la la"
 
 
       
